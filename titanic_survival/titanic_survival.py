@@ -4,7 +4,11 @@ import numpy as np
 import re  # re >> 정규표현 연산 re(Regular expression operation)
 import sklearn
 import xgboost as xgb  # xgboost : 그라디언트 부스트 라이브러리
+
+import matplotlib
 import matplotlib.pyplot as plt
+
+matplotlib.use('TkAgg')
 
 import plotly.offline as py
 
@@ -21,6 +25,8 @@ from sklearn.ensemble import (RandomForestClassifier, AdaBoostClassifier,
                               GradientBoostingClassifier, ExtraTreesClassifier)
 from sklearn.svm import SVC
 from sklearn.cross_validation import KFold
+
+import seaborn as sns
 
 # Load dataset
 train = pd.read_csv('/Users/song/Documents/kaggle/titanic_survival/input/train.csv')
@@ -188,15 +194,13 @@ class SKlearnHelper(object):
         return self.clf.fit(x, y)
 
     def feature_importances(self, x, y):
-        print(self.clf.fit(x, y).feature_importances_)
-
-
-import seaborn as sns
+        # print(self.clf.fit(x, y).feature_importances_)
+        return (self.clf.fit(x, y).feature_importances_)
 
 
 def get_oof(clf, x_train, y_train, x_test):
-    oof_train = np.zeros((ntrain))
-    oof_test = np.zeros((ntest))
+    oof_train = np.zeros((ntrain,))
+    oof_test = np.zeros((ntest,))
     oof_test_skf = np.empty((NFOLDS, ntest))
 
     for i, (train_index, test_index) in enumerate(kf):
@@ -308,6 +312,11 @@ cols = train.columns.values
 
 print('cols: ', cols)
 
+rf_features = list(rf_feature)
+et_feature = list(et_feature)
+ada_feature = list(ada_feature)
+gb_feature = list(gb_feature)
+
 # feature importances 를 DataFrame 으로 구성
 feature_dataframe = pd.DataFrame({'features': cols,
                                   'Random Forest feature importances': rf_feature,
@@ -316,45 +325,34 @@ feature_dataframe = pd.DataFrame({'features': cols,
                                   'Gradient Boost feature importances': gb_feature
                                   })
 
-print(rf_feature)
-print(et_feature)
-print(ada_feature)
-print(gb_feature)
+# Scatter plot
+trace = go.Scatter(
+    y=feature_dataframe['Random Forest feature importances'].values,
+    x=feature_dataframe['features'].values,
+    mode='markers',
+    marker=dict(
+        sizemode='diameter',
+        sizeref=1,
+        size=25,
+        color=feature_dataframe['Random Forest feature importances'].values,
+        colorscale='Portland',
+        showscale=True
+    ),
+    text=feature_dataframe['features'].values
+)
+data = [trace]
 
-print(feature_dataframe['Random Forest feature importances'].values)
-print(feature_dataframe['Extra Trees feature importances'].values)
-print(feature_dataframe['AdaBoost feature importances'].values)
-print(feature_dataframe['Gradient Boost feature importances'].values)
+layout = go.Layout(
+    autosize=True,
+    title='Random Forest Feature Importance',
+    hovermode='closest',
 
-print(feature_dataframe['features'])
-# # Scatter plot
-# trace = go.Scatter(
-#     y=feature_dataframe['Random Forest feature importances'].values,
-#     x=feature_dataframe['features'].values,
-#     mode='markers',
-#     marker=dict(
-#         sizemode='diameter',
-#         sizeref=1,
-#         size=25,
-#         color=feature_dataframe['Random Forest feature importances'].values,
-#         colorscale='Portland',
-#         showscale=True
-#     ),
-#     text=feature_dataframe['features'].values
-# )
-# data = [trace]
-#
-# layout= go.Layout(
-#     autosize= True,
-#     title= 'Random Forest Feature Importance',
-#     hovermode= 'closest',
-#
-#     yaxis=dict(
-#         title= 'Feature Importance',
-#         ticklen= 5,
-#         gridwidth= 2
-#     ),
-#     showlegend= False
-# )
-# fig = go.Figure(data=data, layout=layout)
-# py.iplot(fig,filename='scatter2010')
+    yaxis=dict(
+        title='Feature Importance',
+        ticklen=5,
+        gridwidth=2
+    ),
+    showlegend=False
+)
+fig = go.Figure(data=data, layout=layout)
+py.iplot(fig, filename='scatter2010')
