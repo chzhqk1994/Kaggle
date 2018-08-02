@@ -312,6 +312,7 @@ cols = train.columns.values
 
 print('cols: ', cols)
 
+# Tuple 자료형을 list 자료형으로 반환, 또는 주어진 항목들을 list 로 만들어 준다
 rf_features = list(rf_feature)
 et_feature = list(et_feature)
 ada_feature = list(ada_feature)
@@ -354,5 +355,102 @@ layout = go.Layout(
     ),
     showlegend=False
 )
+
 fig = go.Figure(data=data, layout=layout)
-py.iplot(fig, filename='scatter2010')
+py.plot(fig, filename='scatter2010')
+
+trace = go.Scatter(
+    y=feature_dataframe['Extra Trees feature importances'].values,
+    x=feature_dataframe['features'].values,
+    mode='markers',
+    marker=dict(
+        sizemode='diameter',
+        sizeref=1,
+        size=25,
+        color=feature_dataframe['Extra Trees feature importances'].values,
+        colorscale='Portland',
+        showscale=True
+    ),
+    text=feature_dataframe['features'].values
+)
+data = [trace]
+
+layout = go.Layout(
+    autosize=True,
+    title='Extra Trees feature importances',
+    hovermode='closest',
+
+    yaxis=dict(
+        title='Feature Importances',
+        ticklen=5,
+        gridwidth=2
+    ),
+    showlegend=False
+)
+
+fig = go.Figure(data=data, layout=layout)
+py.plot(fig, filename='scatter2010')
+
+trace = go.Scatter(
+    y=feature_dataframe['AdaBoost feature importances'],
+    x=feature_dataframe['features'].values,
+    mode='markers',
+    marker=dict(
+        sizemode='diameter',
+        sizeref=1,
+        size=25,
+        color=feature_dataframe['AdaBoost feature importances'].values,
+        colorscale='Portland',
+        showscale=True
+    ),
+    text=feature_dataframe['features'].values
+)
+data = [trace]
+
+layout = go.Layout(
+    autosize=True,
+    title='AdaBoost feature importances',
+    hovermode='closest',
+
+    yaxis=dict(
+        title='Feature Importances',
+        ticklen=5,
+        gridwidth=2
+    ),
+    showlegend=False
+)
+
+fig = go.Figure(data=data, layout=layout)
+py.plot(fig, filename='scatter2010')
+
+trace = go.Scatter(
+    y=feature_dataframe['Gradient Boost feature importances'],
+    x=feature_dataframe['features'].values,
+    mode='markers',
+    marker=dict(
+        sizemode='diameter',
+        sizeref=1,
+        size=25,
+        color=feature_dataframe['Gradient Boost feature importances'].values,
+        colorscale='Portland',
+        showscale=True
+    ),
+    text=feature_dataframe['features'].values
+)
+data = [trace]
+
+layout = go.Layout(
+    autosize=True,
+    title='Gradient Boost feature importances',
+    hovermode='closest',
+
+    yaxis=dict(
+        title='Feature Importances',
+        ticklen=5,
+        gridwidth=2
+    ),
+    showlegend=False
+)
+
+fig = go.Figure(data=data, layout=layout)
+py.plot(fig, filename='scatter2010')

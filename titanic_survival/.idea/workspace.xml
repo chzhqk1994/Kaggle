@@ -17,8 +17,8 @@
       <file leaf-file-name="titanic_survival.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/titanic_survival.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="356" column="41" lean-forward="true" selection-start-line="356" selection-start-column="41" selection-end-line="356" selection-end-column="41" />
+            <state relative-caret-position="360">
+              <caret line="456" column="0" lean-forward="true" selection-start-line="456" selection-start-column="0" selection-end-line="456" selection-end-column="0" />
               <folding>
                 <element signature="e#24#43#0" expanded="true" />
               </folding>
@@ -51,11 +51,12 @@
       <find>drop</find>
       <find>dataframe</find>
       <find>matplotlib</find>
-      <find>seaborn</find>
       <find>sns</find>
       <find>plt</find>
       <find>show</find>
       <find>SK</find>
+      <find>shows</find>
+      <find>seaborn</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -308,8 +309,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/titanic_survival.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="356" column="41" lean-forward="true" selection-start-line="356" selection-start-column="41" selection-end-line="356" selection-end-column="41" />
+        <state relative-caret-position="360">
+          <caret line="456" column="0" lean-forward="true" selection-start-line="456" selection-start-column="0" selection-end-line="456" selection-end-column="0" />
           <folding>
             <element signature="e#24#43#0" expanded="true" />
           </folding>
