@@ -356,8 +356,8 @@ layout = go.Layout(
     showlegend=False
 )
 
-fig = go.Figure(data=data, layout=layout)
-py.plot(fig, filename='scatter2010')
+# fig = go.Figure(data=data, layout=layout)
+# py.plot(fig, filename='scatter2010')
 
 trace = go.Scatter(
     y=feature_dataframe['Extra Trees feature importances'].values,
@@ -388,8 +388,8 @@ layout = go.Layout(
     showlegend=False
 )
 
-fig = go.Figure(data=data, layout=layout)
-py.plot(fig, filename='scatter2010')
+# fig = go.Figure(data=data, layout=layout)
+# py.plot(fig, filename='scatter2010')
 
 trace = go.Scatter(
     y=feature_dataframe['AdaBoost feature importances'],
@@ -420,8 +420,8 @@ layout = go.Layout(
     showlegend=False
 )
 
-fig = go.Figure(data=data, layout=layout)
-py.plot(fig, filename='scatter2010')
+# fig = go.Figure(data=data, layout=layout)
+# py.plot(fig, filename='scatter2010')
 
 trace = go.Scatter(
     y=feature_dataframe['Gradient Boost feature importances'],
@@ -452,5 +452,43 @@ layout = go.Layout(
     showlegend=False
 )
 
+# fig = go.Figure(data=data, layout=layout)
+# py.plot(fig, filename='scatter2010')
+
+feature_dataframe['mean'] = feature_dataframe.mean(axis=1)  # axis=1 compute the mean row-wise > 가로 행 평균을 계산한 값을 추가하는 듯
+print(feature_dataframe.head(3))
+
+y = feature_dataframe['mean'].values
+x = feature_dataframe['features'].values
+
+data = [go.Bar(
+    x=x,
+    y=y,
+    width=0.5,
+    marker=dict(
+        color=feature_dataframe['mean'].values,
+        colorscale='Portland',
+        showscale=True,
+        reversescale=False
+    ),
+    opacity=0.6
+)]
+
+layout= go.Layout(
+    autosize= True,
+    title= 'Barplots of Mean Feature Importance',
+    hovermode= 'closest',
+    yaxis=dict(
+        title= 'Feature Importance',
+        ticklen= 5,
+        gridwidth= 2
+    ),
+    showlegend= False
+)
 fig = go.Figure(data=data, layout=layout)
-py.plot(fig, filename='scatter2010')
+py.plot(fig, filename='bar-direct-labels')
+
+base_predictions_train = pd.DataFrame({
+    'RandomForest': rf_oof_train.ravel(),
+
+})
